@@ -15,7 +15,7 @@ if [[ -z $SKIP_TRAFFIC_LOAD ]]; then
   cd /govuk-search-analytics
   pip install -r requirements.txt
   rm -f page-traffic.dump
-  python3 scripts/fetch.py page-traffic.dump 11
+  python3 scripts/fetch.py page-traffic.dump 14
   chown -R "\${CURRENT_USER}:\${CURRENT_GROUP}" .
   """
 
