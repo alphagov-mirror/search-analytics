@@ -19,7 +19,8 @@ if [[ -z $SKIP_TRAFFIC_LOAD ]]; then
   chown -R "\${CURRENT_USER}:\${CURRENT_GROUP}" .
   """
 
-  ssh deploy@${SEARCH_NODE} "(cd /var/apps/${TARGET_APPLICATION}; govuk_setenv ${TARGET_APPLICATION} bundle exec ./bin/page_traffic_load)" < page-traffic.dump
+  ssh deploy@${SEARCH_NODE} "(cd /var/apps/${TARGET_APPLICATION})"
+  # govuk_setenv ${TARGET_APPLICATION} bundle exec ./bin/page_traffic_load)" < page-traffic.dump
   # ssh deploy@${SEARCH_NODE} "(cd /var/apps/${TARGET_APPLICATION}; govuk_setenv ${TARGET_APPLICATION} bundle exec rake search:clean SEARCH_INDEX=page-traffic)"
 fi
 
