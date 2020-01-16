@@ -32,11 +32,12 @@ sleep 2400
 
 ssh deploy@${SEARCH_NODE} "(cd /var/apps/${TARGET_APPLICATION}; PROCESS_ALL_DATA=true SEARCH_INDEX=government govuk_setenv ${TARGET_APPLICATION} bundle exec rake search:update_popularity)"
 
+echo $?
+exit
+
 # Wait 40 minutes, to let the Sidekiq jobs be processed to avoid
 # taking up lots of Redis memory
 echo "Going to sleep for a second time (40 minutes again) to let the Sidekiq jobs get processed"
 sleep 2400
 
 ssh deploy@${SEARCH_NODE} "(cd /var/apps/${TARGET_APPLICATION}; SEARCH_INDEX=govuk govuk_setenv ${TARGET_APPLICATION} bundle exec rake search:update_popularity)"
-echo $?
-exit
