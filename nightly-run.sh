@@ -23,10 +23,10 @@ if [[ -z $SKIP_TRAFFIC_LOAD ]]; then
   ssh deploy@${SEARCH_NODE} "(cd /var/apps/${TARGET_APPLICATION}; govuk_setenv ${TARGET_APPLICATION} bundle exec rake search:clean SEARCH_INDEX=page-traffic)"
 fi
 
+ssh deploy@${SEARCH_NODE} "(cd /var/apps/${TARGET_APPLICATION}; PROCESS_ALL_DATA=true SEARCH_INDEX=detailed govuk_setenv ${TARGET_APPLICATION} bundle exec rake search:update_popularity)"
+
 echo $?
 exit
-
-ssh deploy@${SEARCH_NODE} "(cd /var/apps/${TARGET_APPLICATION}; PROCESS_ALL_DATA=true SEARCH_INDEX=detailed govuk_setenv ${TARGET_APPLICATION} bundle exec rake search:update_popularity)"
 
 # Wait 40 minutes, to let the Sidekiq jobs be processed to avoid
 # taking up lots of Redis memory
