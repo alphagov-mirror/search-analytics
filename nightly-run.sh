@@ -29,7 +29,7 @@ ssh deploy@${SEARCH_NODE} "(cd /var/apps/${TARGET_APPLICATION}; PROCESS_ALL_DATA
 # Wait 40 minutes, to let the Sidekiq jobs be processed to avoid
 # taking up lots of Redis memory
 echo "Going to sleep for 40 minutes to let the Sidekiq jobs get processed"
-sleep 1
+sleep 1200
 
 echo $?
 exit
