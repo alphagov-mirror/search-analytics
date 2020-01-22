@@ -6,6 +6,8 @@ if [[ -z $TARGET_APPLICATION ]]; then
   TARGET_APPLICATION=search-api
 fi
 
+date
+
 SEARCH_NODE=$(/usr/local/bin/govuk_node_list -c search --single-node)
 
 # (Jenkins succeeds with exit here)
@@ -23,14 +25,17 @@ if [[ -z $SKIP_TRAFFIC_LOAD ]]; then
   ssh deploy@${SEARCH_NODE} "(cd /var/apps/${TARGET_APPLICATION}; govuk_setenv ${TARGET_APPLICATION} bundle exec rake search:clean SEARCH_INDEX=page-traffic)"
 fi
 
+date
+
 ssh deploy@${SEARCH_NODE} "(cd /var/apps/${TARGET_APPLICATION}; PROCESS_ALL_DATA=true SEARCH_INDEX=detailed govuk_setenv ${TARGET_APPLICATION} bundle exec rake search:update_popularity)"
 
+date
 
 # Wait 40 minutes, to let the Sidekiq jobs be processed to avoid
 # taking up lots of Redis memory
 echo "Going to sleep for 40 minutes to let the Sidekiq jobs get processed"
 sleep 1200
-
+date
 echo $?
 exit
 ssh deploy@${SEARCH_NODE} "(cd /var/apps/${TARGET_APPLICATION}; PROCESS_ALL_DATA=true SEARCH_INDEX=government govuk_setenv ${TARGET_APPLICATION} bundle exec rake search:update_popularity)"
