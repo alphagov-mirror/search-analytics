@@ -34,7 +34,7 @@ date
 # Wait 40 minutes, to let the Sidekiq jobs be processed to avoid
 # taking up lots of Redis memory
 echo "Going to sleep for 40 minutes to let the Sidekiq jobs get processed"
-sleep 1200
+sleep 1800
 date
 echo $?
 exit
